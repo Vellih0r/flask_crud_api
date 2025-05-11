@@ -13,7 +13,7 @@ def dumps_default(data):
 @app.route('/<table>', methods = ['POST'])
 def init(table):
     result = create(table)
-    return jsonify(result, 201)
+    return jsonify(f"Table {table} created", 201)
 
 @app.route('/<table>', methods = ['GET'])
 def get_all(table):
@@ -21,7 +21,7 @@ def get_all(table):
         return jsonify(out, 200)
     result = read(table)
     if not result:
-        return jsonify(result, 404)
+        return jsonify(f"Table {table} not found", 404)
     for row in result:
         setex_key(f'{table}:{row.get("id")}', dumps_default(row))
     return jsonify(result, 200)
@@ -32,7 +32,7 @@ def get_one(table, id):
         return jsonify(out, 200)
     result = read_one(table, id)
     if not result:
-        return jsonify(result, 404)
+        return jsonify(f"Row {id} not found", 404)
     setex_key(f'{table}:{id}', dumps_default(result))
     return jsonify(result, 200)
 
