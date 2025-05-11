@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book list</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .book-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .book {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 250px;
+            margin: 10px;
+        }
+        .book img {
+            width: 200px;
+            height: auto;
+            border-radius: 4px;
+        }
+        .rating {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book List</h1>
+    <div class="book-container">
+        <div class="book">
+            <h2>Grokking Algorithms</h2>
+            <img src="{{ url_for('../frontend/static', filename='grok.png') }}" alt="Grokking Algorithms">
+            <p>Author: Aditya Bhargava</p>
+            <form class="rating">
+                <label for="rating1">Rate this book:</label>
+                <select id="rating1" name="rating">
+                    <option value="5">5 ★★★★★</option>
+                    <option value="4">4 ★★★★</option>
+                    <option value="3">3 ★★★</option>
+                    <option value="2">2 ★★</option>
+                    <option value="1">1 ★</option>
+                </select>
+            </form>
+        </div>
+        <div class="book">
+            <h2>The C Programming Language</h2>
+            <img src="{{ url_for('../frontend/static', filename='c.png') }}" alt="The C Programming Language">
+            <p>Authors: Brian Kernighan and Dennis Ritchie</p>
+            <form class="rating">
+                <label for="rating2">Rate this book:</label>
+                <select id="rating2" name="rating">
+                    <option value="5">5 ★★★★★</option>
+                    <option value="4">4 ★★★★</option>
+                    <option value="3">3 ★★★</option>
+                    <option value="2">2 ★★</option>
+                    <option value="1">1 ★</option>
+                </select>
+            </form>
+        </div>
+        <div class="book">
+            <h2>Steppenwolf</h2>
+            <img src="{{ url_for('../frontend/static', filename='Hesse.png') }}" alt="Steppenwolf">
+            <p>Author: Hermann Hesse</p>
+            <form class="rating">
+                <label for="rating3">Rate this book:</label>
+                <select id="rating3" name="rating">
+                    <option value="5">5 ★★★★★</option>
+                    <option value="4">4 ★★★★</option>
+                    <option value="3">3 ★★★</option>
+                    <option value="2">2 ★★</option>
+                    <option value="1">1 ★</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
