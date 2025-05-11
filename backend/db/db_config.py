@@ -1,0 +1,5 @@
+dbname = 'postgres'
+user = 'postgres'
+password = 'jopa'
+host = 'db'
+port = '5432'

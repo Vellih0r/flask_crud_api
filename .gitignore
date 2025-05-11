@@ -1,0 +1,4 @@
+*.un~
+*.pyc
+__pychache__/
+.pytest_cache/
