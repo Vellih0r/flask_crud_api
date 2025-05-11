@@ -40,13 +40,17 @@ def validate_table(func):
     return wrapper
 
 def create(tb: str) -> bool:
-    """Create books table"""
+    """Create books or ratings table"""
     if exists(tb):
         return False
     with open_db() as conn:
         with conn.cursor() as cursor:
-            cursor.execute(f"CREATE TABLE {tb} (id int, title varchar(20), rating decimal(2,1))")
-            return True
+            if tb == 'books':
+                cursor.execute(f"CREATE TABLE books (id int PRIMARY KEY, title varchar(20), rating decimal(2,1), price decimal(4,2))")
+                return True
+            if tb == 'ratings':
+                cursor.execute(f"CREATE TABLE ratings (user varchar(20) PRIMARY KEY, rating decimal(2,1), b_title varchar(20) REFERENCES (books.title))")
+                return True
 
 def del_table(tb: str) -> bool:
     """Removes table by name"""
