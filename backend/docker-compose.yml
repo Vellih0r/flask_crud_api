@@ -15,6 +15,10 @@ services:
     restart: always
     depends_on:
       - db
+    volumes:
+      - ../frontend:/app/frontend
+      - ../backend:/app/backend
+
   redis:
     image: redis:latest
     restart: always

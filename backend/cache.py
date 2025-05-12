@@ -9,14 +9,16 @@ def get_key(key: str):
     try:
         out = r.get(key)
     except Exception as e:
-        pritn(f'Exception {e}')
+        print(f'Exception {e}')
         return
-    return loads(out)
+    # return loads(out)
+    return out
 
 def get_keys() -> Optional[dict]:
     try:
         keys = r.keys('*')
-        out = [loads(r.get(key)) for key in keys]
+        # out = [loads(r.get(key)) for key in keys]
+        out = [(r.get(key)) for key in keys]
     except Exception as e:
         print(f'Exception {e}')
         return

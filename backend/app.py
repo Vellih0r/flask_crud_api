@@ -1,22 +1,44 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from json import dumps
 from decimal import Decimal
 from cache import *
 from db.db import *
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+
+@app.route('/<name>', methods=['GET', 'POST'])
+def init(name):
+    if request.method == 'POST':
+        grokking = request.form.get('rating1')
+        the_c    = request.form.get('rating2')
+        wolf     = request.form.get('rating3')
+        insert('ratings',
+            data = [{"user" : name,
+                    "rating" : grokking,
+                    "b_title" : "Grokking Algorithms"},
+                    {"user" : name,
+                    "rating" : the_c,
+                    "b_title" : "The C programming language"},
+                    {"user" : name,
+                    "rating" : wolf,
+                    "b_title" : "Steppenwolf"}])
+    return render_template('index.html')
 
 def dumps_default(data):
     converter = lambda el : float(el) if isinstance(el, Decimal) else str(el)
     return dumps(data, default=converter)
 
-@app.route('/<table>', methods = ['POST'])
-def init(table):
+@app.route('/books', methods = ['POST'])
+@app.route('/ratings', methods = ['POST'])
+def create_tb():
+    table = request.path.strip('/')
     result = create(table)
     return jsonify(f"Table {table} created", 201)
 
-@app.route('/<table>', methods = ['GET'])
-def get_all(table):
+@app.route('/books', methods = ['GET'])
+@app.route('/ratings', methods = ['GET'])
+def get_all():
+    table = request.path.strip('/')
     if out :=  get_keys():
         return jsonify(out, 200)
     result = read(table)
