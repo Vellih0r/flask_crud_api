@@ -45,7 +45,7 @@ def create(tb: str) -> bool:
     with open_db() as conn:
         with conn.cursor() as cursor:
             if tb == 'books':
-                cursor.execute(f"CREATE TABLE books (id int PRIMARY KEY, title varchar(20), rating decimal(2,1), price decimal(4,2))")
+                cursor.execute(f"CREATE TABLE books (id int PRIMARY KEY, title varchar(20) UNIQUE, rating decimal(2,1), price decimal(4,2))")
                 return True
             if tb == 'ratings':
                 cursor.execute(f"CREATE TABLE ratings (u_name varchar(20) PRIMARY KEY, rating int, b_title varchar(20) REFERENCES books(title))")
