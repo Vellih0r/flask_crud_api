@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
   app:
     build: ./
     ports:
@@ -18,9 +20,13 @@ services:
     volumes:
       - ../frontend:/app/frontend
       - ../backend:/app/backend
+    networks:
+      - app-network
 
   redis:
     image: redis:latest
     restart: always
     depends_on:
       - db
+    networks:
+      - app-network
