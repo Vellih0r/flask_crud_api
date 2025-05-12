@@ -1,6 +1,5 @@
 import psycopg2
 from db import db_config
-import json
 from typing import Union
 import psycopg2.extras
 from functools import wraps
