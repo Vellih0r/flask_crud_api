@@ -15,13 +15,13 @@ def init(name):
         insert('ratings',
             data = [{"user" : name,
                     "rating" : grokking,
-                    "b_title" : "Grokking Algorithms"},
-                    {"user" : name,
-                    "rating" : the_c,
-                    "b_title" : "The C programming language"},
+                    "b_id" : 1},
                     {"user" : name,
                     "rating" : wolf,
-                    "b_title" : "Steppenwolf"}])
+                    "b_id" : 2},
+                    {"user" : name,
+                    "rating" : the_c,
+                    "b_id" : 3}])
     return render_template('index.html')
 
 def dumps_default(data):
