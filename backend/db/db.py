@@ -3,6 +3,11 @@ from db import db_config
 from typing import Union
 import psycopg2.extras
 from functools import wraps
+import logging
+
+logging.basicConfig(format="%(asctime)s - %(message)s")
+
+logger = logging.getLogger(__name__)
 
 def open_db() -> object :
     """Connect to database using info from config"""
@@ -34,7 +39,7 @@ def validate_table(func):
         if tb and exists(tb) and tb in ['books', 'ratings']:
             return func(*args, **kwargs)
         else:
-            print(f"[validate_table] Invalid or non-existent table: {tb}")
+            logger.error(f"[validate_table] Invalid or non-existent table: {tb}")
             return False
     return wrapper
 
@@ -62,7 +67,7 @@ def del_table(tb: str) -> bool:
                     cursor.execute(f"DROP TABLE {tb}")
                     return True
         except Exception as e:
-            print(f"Exception {e}")
+            logger.exception(f"Exception {e}")
             return False
     return False
 
@@ -101,7 +106,7 @@ def insert(tb: str, data: Union[dict, list], id: int = 0) -> bool:
                     cursor.executemany(f"INSERT INTO {tb} values (%s, %s, %s)", values)
                     return True
     except Exception as e:
-        print(f"Exception {e}")
+        logger.exception(f"Exception {e}")
         return False
 
 @validate_table
@@ -118,7 +123,7 @@ def update_db(tb: str, data: Union[dict, list], id: int) -> bool:
                     cursor.executemany(f"UPDATE {tb} SET title = %s, rating = %s WHERE id = %s", values)
                     return True
     except Exception as e:
-        print(f"Exception {e}")
+        logger.exception(f"Exception {e}")
         return False
 
 @validate_table
@@ -130,5 +135,5 @@ def del_one(tb: str, id : int) -> bool:
                 cursor.execute(f"DELETE FROM {tb} WHERE id = %s", (id,))
                 return True
     except Exception as e:
-        print(f"Exception {e}")
+        logger.exception(f"Exception {e}")
         return False
