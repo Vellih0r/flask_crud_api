@@ -47,45 +47,42 @@
             <h2>Grokking Algorithms</h2>
             <img src="{{ url_for('static', filename='grok.png') }}" alt="Grokking Algorithms">
             <p>Author: Aditya Bhargava</p>
-            <form class="rating">
+            <form class="rating" action="/rate" method="POST">
                 <label for="rating1">Rate this book:</label>
-                <select id="rating1" name="rating">
+                <select id="rating1" name="rating1">
                     <option value="5">5 ★★★★★</option>
                     <option value="4">4 ★★★★</option>
                     <option value="3">3 ★★★</option>
                     <option value="2">2 ★★</option>
                     <option value="1">1 ★</option>
                 </select>
-            </form>
         </div>
         <div class="book">
             <h2>The C Programming Language</h2>
             <img src="{{ url_for('static', filename='c.png') }}" alt="The C Programming Language">
             <p>Authors: Brian Kernighan and Dennis Ritchie</p>
-            <form class="rating">
                 <label for="rating2">Rate this book:</label>
-                <select id="rating2" name="rating">
+                <select id="rating2" name="rating2">
                     <option value="5">5 ★★★★★</option>
                     <option value="4">4 ★★★★</option>
                     <option value="3">3 ★★★</option>
                     <option value="2">2 ★★</option>
                     <option value="1">1 ★</option>
                 </select>
-            </form>
         </div>
         <div class="book">
             <h2>Steppenwolf</h2>
-            <img src="{{ url_for('static', filename='Hesse.png') }}" alt="Steppenwolf">
+            <img src="{{ url_for('static', filename='hesse.png') }}" alt="Steppenwolf">
             <p>Author: Hermann Hesse</p>
-            <form class="rating">
                 <label for="rating3">Rate this book:</label>
-                <select id="rating3" name="rating">
+                <select id="rating3" name="rating3">
                     <option value="5">5 ★★★★★</option>
                     <option value="4">4 ★★★★</option>
                     <option value="3">3 ★★★</option>
                     <option value="2">2 ★★</option>
                     <option value="1">1 ★</option>
                 </select>
+                <button type="submit">Submit</button>
             </form>
         </div>
     </div>

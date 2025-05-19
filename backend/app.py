@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+import flask_monitoringdashboard as dashboard
 from json import dumps
 from decimal import Decimal
 from cache import *
@@ -10,13 +11,16 @@ logging.basicConfig(format="%(asctime)s - %(message)s")
 logger_f = logging.getLogger(__name__)
 
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+dashboard.bind(app)
+
 
 @app.route('/<name>', methods=['GET', 'POST'])
 def init(name):
     if request.method == 'POST':
-        grokking = request.form.get('rating1')
-        the_c    = request.form.get('rating2')
-        wolf     = request.form.get('rating3')
+        grokking = request.form.get('rating1', 'Not rated')
+        the_c    = request.form.get('rating2', 'Not rated')
+        wolf     = request.form.get('rating3', 'Not rated')
+        logger.info(grokking, the_c, wolf)
         insert('ratings',
             data = [{"user" : name,
                     "rating" : grokking,
@@ -26,7 +30,9 @@ def init(name):
                     "b_id" : 2},
                     {"user" : name,
                     "rating" : the_c,
-                    "b_id" : 3}])
+                    "b_id" : 3}],
+            id = 0)
+        return f"Ratings: Grokking - {grokking}, The C - {the_c}, Wolf - {wolf}"
     return render_template('index.html')
 
 def dumps_default(data):
@@ -37,18 +43,24 @@ def dumps_default(data):
 @app.route('/ratings', methods = ['POST'])
 def create_tb():
     table = request.path.strip('/')
-    create(table)
-    logger_f.info(f"Table {table} created")
-    return jsonify(f"Table {table} created", 201)
+    out = create(table)
+    if out:
+        logger_f.info(f"Table {table} created")
+        return jsonify(f"Table {table} created", 201)
+    else:
+        logger_f.info(f"Table {table} exists or table not valid")
+        return jsonify(f"Table {table} exists or table not valid")
 
 @app.route('/books', methods = ['GET'])
 @app.route('/ratings', methods = ['GET'])
 def get_all():
     table = request.path.strip('/')
-    if out :=  get_keys():
-        return jsonify(out, 200)
+    logger.info(table)
+    # if out :=  get_keys():
+    #     return jsonify(out, 200)
     result = read(table)
-    if not result:
+    logger.info(result)
+    if result != [] and not result:
         logger_f.error(f"Table {table} not found")
         return jsonify(f"Table {table} not found", 404)
     for row in result:
@@ -107,4 +119,4 @@ def delete_row(table, id):
     return jsonify(f"Success delete table row {id} from {table}", 200)
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port = 5000)
+    app.run(host = '0.0.0.0', port = 5000, debug=True)

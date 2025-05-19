@@ -71,7 +71,7 @@ def del_table(tb: str) -> bool:
             return False
     return False
 
-@validate_table
+# @validate_table
 def read(tb: str) -> Union[bool, list]:
     """Reads all data from table by name"""
     with open_db() as conn:
